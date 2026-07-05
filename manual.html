@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Usuario — Dulce Control v2.1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --crema:#FDF6EC;--vainilla:#F5E6C8;--vainilla2:#EDD9A3;
+  --chocolate:#2C1A0E;--choco-medio:#5C3D1E;--caramelo:#C67C2A;
+  --dulce:#E8A45A;--dulce-claro:#FBF0DC;
+  --menta:#2A6B4A;--menta-claro:#E6F5ED;
+  --frutilla:#B03030;--frutilla-claro:#FDEAEA;
+  --azul:#1B3A6B;--azul-claro:#E8F0FB;
+  --borde:#E2D0B0;--borde2:#D4BC8A;
+  --sombra:0 2px 12px rgba(44,26,14,.10);
+  --sombra-lg:0 6px 32px rgba(44,26,14,.18);
+  --radio:8px;--radio-lg:14px;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--crema);color:var(--chocolate);min-height:100vh;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--vainilla);}
+::-webkit-scrollbar-thumb{background:var(--borde2);border-radius:4px;}
+
+/* ── HEADER ── */
+#header{
+  background:var(--chocolate);
+  padding:0 28px;
+  height:58px;
+  display:flex;align-items:center;gap:20px;
+  position:sticky;top:0;z-index:100;
+  border-bottom:3px solid var(--caramelo);
+}
+.header-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:var(--dulce);}
+.header-sub{font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;}
+.header-negocio{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--dulce);margin-left:auto;background:rgba(232,164,90,.12);padding:4px 12px;border-radius:20px;border:1px solid rgba(232,164,90,.25);}
+.header-search{position:relative;margin-left:16px;}
+.header-search input{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  border-radius:var(--radio);padding:6px 12px 6px 32px;
+  font-family:'DM Sans',sans-serif;font-size:.78rem;color:white;width:220px;outline:none;
+}
+.header-search input::placeholder{color:rgba(255,255,255,.35);}
+.header-search input:focus{background:rgba(255,255,255,.13);border-color:var(--caramelo);}
+.header-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:.8rem;color:rgba(255,255,255,.35);}
+.btn-volver{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--menta);color:white;border:none;border-radius:var(--radio);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;}
+.btn-volver:hover{background:#1f5438;}
+
+/* ── LAYOUT ── */
+#layout{display:flex;min-height:calc(100vh - 58px);}
+
+/* ── SIDEBAR NAV ── */
+#sidenav{
+  width:240px;min-width:240px;
+  background:white;border-right:1px solid var(--borde);
+  padding:20px 0;
+  position:sticky;top:58px;height:calc(100vh - 58px);
+  overflow-y:auto;
+}
+.nav-section{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--choco-medio);padding:14px 18px 5px;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 18px;cursor:pointer;
+  font-size:.81rem;color:var(--choco-medio);
+  transition:all .15s;border-left:3px solid transparent;
+  text-decoration:none;
+}
+.nav-item:hover{color:var(--caramelo);background:var(--dulce-claro);border-left-color:var(--vainilla2);}
+.nav-item.active{color:var(--caramelo);background:var(--dulce-claro);border-left-color:var(--caramelo);font-weight:700;}
+.nav-icon{font-size:.95rem;width:18px;text-align:center;flex-shrink:0;}
+
+/* ── CONTENT ── */
+#content{flex:1;padding:32px 36px;max-width:860px;}
+
+/* ── SECTIONS ── */
+.section{margin-bottom:52px;scroll-margin-top:76px;}
+.section-header{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:20px;padding-bottom:14px;
+  border-bottom:2px solid var(--borde);
+}
+.section-icon{font-size:1.6rem;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--chocolate);}
+.section-badge{font-family:'DM Mono',monospace;font-size:.56rem;background:var(--dulce-claro);color:var(--caramelo);padding:3px 9px;border-radius:20px;border:1px solid var(--borde2);}
+
+/* ── CARDS ── */
+.card{background:white;border:1px solid var(--borde);border-radius:var(--radio-lg);padding:20px;box-shadow:var(--sombra);margin-bottom:16px;}
+.card-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--caramelo);margin-bottom:12px;font-weight:700;}
+
+/* ── STEPS ── */
+.steps{display:flex;flex-direction:column;gap:12px;margin:16px 0;}
+.step{display:flex;gap:14px;align-items:flex-start;}
+.step-num{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--caramelo);color:white;
+  font-family:'DM Mono',monospace;font-size:.72rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.step-body{flex:1;}
+.step-titulo{font-size:.85rem;font-weight:700;color:var(--chocolate);margin-bottom:3px;}
+.step-desc{font-size:.78rem;color:var(--choco-medio);line-height:1.55;}
+
+/* ── ALERTS ── */
+.alert{border-radius:var(--radio);padding:12px 16px;margin:12px 0;font-size:.78rem;line-height:1.55;display:flex;gap:10px;align-items:flex-start;}
+.alert-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.alert-warn{background:#FEF3C7;border-left:4px solid #F59E0B;color:#78350F;}
+.alert-info{background:var(--azul-claro);border-left:4px solid var(--azul);color:var(--azul);}
+.alert-ok{background:var(--menta-claro);border-left:4px solid var(--menta);color:var(--menta);}
+.alert-danger{background:var(--frutilla-claro);border-left:4px solid var(--frutilla);color:var(--frutilla);}
+
+/* ── MOCKUP SCREENS ── */
+.mockup{
+  background:var(--crema);border:2px solid var(--borde2);
+  border-radius:var(--radio-lg);overflow:hidden;
+  margin:16px 0;box-shadow:var(--sombra-lg);
+}
+.mockup-bar{
+  background:var(--chocolate);padding:8px 14px;
+  display:flex;align-items:center;gap:8px;
+}
+.mockup-dot{width:8px;height:8px;border-radius:50%;}
+.mockup-title{font-family:'DM Mono',monospace;font-size:.6rem;color:rgba(255,255,255,.5);margin-left:6px;}
+.mockup-body{padding:16px;}
+
+/* Mockup login */
+.mock-login{background:rgba(44,26,14,.85);padding:24px;text-align:center;}
+.mock-login-box{background:white;border-radius:10px;padding:20px;max-width:280px;margin:0 auto;}
+.mock-user-btn{background:var(--vainilla);border:1.5px solid var(--borde2);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:default;}
+.mock-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--caramelo),var(--dulce));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.9rem;color:white;font-weight:700;}
+.mock-pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:160px;margin:12px auto 0;}
+.mock-pin-btn{background:var(--crema);border:1.5px solid var(--borde);border-radius:6px;padding:8px;text-align:center;font-family:'DM Mono',monospace;font-size:.9rem;font-weight:700;color:var(--chocolate);}
+
+/* Mockup POS */
+.mock-pos{display:grid;grid-template-columns:1fr 200px;gap:10px;}
+.mock-prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.mock-prod-btn{background:white;border:1.5px solid var(--borde);border-radius:6px;padding:8px;text-align:left;}
+.mock-prod-name{font-size:.62rem;font-weight:600;color:var(--chocolate);line-height:1.2;margin-bottom:2px;}
+.mock-prod-price{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--menta);font-weight:700;}
+.mock-ticket{background:white;border:1.5px solid var(--borde);border-radius:6px;overflow:hidden;}
+.mock-ticket-header{background:var(--chocolate);padding:8px 10px;}
+.mock-ticket-title{font-family:'Playfair Display',serif;font-size:.75rem;color:var(--dulce);}
+.mock-ticket-body{padding:8px;}
+.mock-ticket-item{display:flex;justify-content:space-between;font-size:.62rem;padding:3px 0;border-bottom:1px solid var(--borde);}
+.mock-ticket-total{display:flex;justify-content:space-between;padding-top:6px;font-weight:700;font-family:'DM Mono',monospace;font-size:.72rem;}
+.mock-btn-reg{background:var(--menta);color:white;border:none;border-radius:6px;padding:7px;width:100%;margin-top:6px;font-size:.65rem;font-weight:700;}
+
+/* Mockup stock */
+.mock-stock-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--borde);font-size:.65rem;}
+.mock-stock-name{flex:1;font-weight:600;}
+.mock-badge{display:inline-block;padding:1px 6px;border-radius:10px;font-family:'DM Mono',monospace;font-size:.55rem;font-weight:700;}
+.mock-badge-ok{background:var(--menta-claro);color:var(--menta);}
+.mock-badge-warn{background:#FEF3C7;color:#92400E;}
+.mock-badge-danger{background:var(--frutilla-claro);color:var(--frutilla);}
+
+/* Mockup pareto */
+.mock-pareto-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+.mock-pareto-name{font-size:.6rem;font-weight:600;min-width:110px;}
+.mock-pareto-bg{flex:1;height:10px;background:var(--vainilla);border-radius:3px;overflow:hidden;}
+.mock-pareto-fill{height:100%;border-radius:3px;}
+
+/* ── TABLA ROLES ── */
+.roles-table{width:100%;border-collapse:collapse;font-size:.78rem;}
+.roles-table th{padding:8px 12px;text-align:left;font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--choco-medio);border-bottom:2px solid var(--borde);}
+.roles-table td{padding:8px 12px;border-bottom:1px solid var(--borde);}
+.roles-table tr:last-child td{border-bottom:none;}
+.check{color:var(--menta);font-weight:700;}
+.cross{color:var(--frutilla);}
+
+/* ── FAQ ── */
+.faq-item{border:1px solid var(--borde);border-radius:var(--radio);margin-bottom:8px;overflow:hidden;}
+.faq-q{
+  padding:12px 16px;background:var(--vainilla);
+  font-size:.82rem;font-weight:600;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  user-select:none;transition:background .15s;
+}
+.faq-q:hover{background:var(--vainilla2);}
+.faq-q .faq-arrow{font-size:.7rem;transition:transform .2s;}
+.faq-item.open .faq-arrow{transform:rotate(180deg);}
+.faq-a{display:none;padding:12px 16px;font-size:.78rem;color:var(--choco-medio);line-height:1.6;}
+.faq-item.open .faq-a{display:block;}
+
+/* ── FLOW DIAGRAM ── */
+.flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:14px 0;}
+.flow-box{
+  background:white;border:2px solid var(--borde2);
+  border-radius:var(--radio);padding:8px 14px;
+  font-size:.72rem;font-weight:600;text-align:center;min-width:90px;
+}
+.flow-box.active{background:var(--dulce-claro);border-color:var(--caramelo);color:var(--caramelo);}
+.flow-box.success{background:var(--menta-claro);border-color:var(--menta);color:var(--menta);}
+.flow-box.warning{background:#FEF3C7;border-color:#F59E0B;color:#78350F;}
+.flow-arrow{padding:0 6px;color:var(--borde2);font-size:1rem;font-weight:700;}
+
+/* ── HIGHLIGHT ── */
+.hl{background:var(--dulce-claro);padding:1px 5px;border-radius:3px;font-family:'DM Mono',monospace;font-size:.75em;}
+
+/* ── GRID 2 ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* ── SEARCH HIGHLIGHT ── */
+.search-highlight{background:#FEF08A;}
+mark{background:#FEF08A;border-radius:2px;}
+
+/* ── FOOTER BRB ── */
+.brb-footer{
+  background:var(--chocolate);color:rgba(255,255,255,.55);
+  text-align:center;padding:14px 24px;
+  font-family:'DM Mono',monospace;font-size:.54rem;
+  letter-spacing:.04em;line-height:1.8;
+  border-top:3px solid var(--caramelo);
+}
+.brb-footer strong{color:var(--dulce);}
+.brb-footer span{opacity:.4;}
+
+@media(max-width:900px){
+  #sidenav{display:none;}
+  #content{padding:20px;}
+  .grid-2{grid-template-columns:1fr;}
+  .mock-pos{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div id="header">
+  <div>
+    <div class="header-logo">Dulce Control</div>
+    <div class="header-sub">Manual de usuario · v2.1</div>
+  </div>
+  <div class="header-search">
+    <span class="header-search-icon">🔍</span>
+    <input type="text" id="search-input" placeholder="Buscar en el manual..." oninput="buscarEnManual(this.value)">
+  </div>
+  <div class="header-negocio" id="header-negocio">Sistema</div>
+  <a href="index.html" class="btn-volver">← Volver al sistema</a>
+</div>
+
+<div id="layout">
+
+<!-- SIDENAV -->
+<nav id="sidenav">
+  <div class="nav-section">Introducción</div>
+  <a class="nav-item active" href="#intro" onclick="activarNav(this)"><span class="nav-icon">📖</span>¿Qué es Dulce Control?</a>
+  <a class="nav-item" href="#acceso" onclick="activarNav(this)"><span class="nav-icon">🔐</span>Acceso y usuarios</a>
+
+  <div class="nav-section">Operaciones (diario)</div>
+  <a class="nav-item" href="#ventas" onclick="activarNav(this)"><span class="nav-icon">🛒</span>Venta diaria</a>
+  <a class="nav-item" href="#stock" onclick="activarNav(this)"><span class="nav-icon">📦</span>Stock e inventario</a>
+  <a class="nav-item" href="#productos" onclick="activarNav(this)"><span class="nav-icon">🍦</span>Catálogo de productos</a>
+  <a class="nav-item" href="#historial" onclick="activarNav(this)"><span class="nav-icon">📋</span>Historial de ventas</a>
+  <a class="nav-item" href="#cierre" onclick="activarNav(this)"><span class="nav-icon">📅</span>Cierre mensual</a>
+
+  <div class="nav-section">Administración</div>
+  <a class="nav-item" href="#insumos" onclick="activarNav(this)"><span class="nav-icon">🧴</span>Insumos</a>
+  <a class="nav-item" href="#gastos" onclick="activarNav(this)"><span class="nav-icon">💸</span>Gastos</a>
+  <a class="nav-item" href="#balance" onclick="activarNav(this)"><span class="nav-icon">📊</span>Balance e IA</a>
+  <a class="nav-item" href="#rrhh" onclick="activarNav(this)"><span class="nav-icon">👥</span>Empleados</a>
+  <a class="nav-item" href="#liquidacion" onclick="activarNav(this)"><span class="nav-icon">💼</span>Liquidación</a>
+  <a class="nav-item" href="#locales" onclick="activarNav(this)"><span class="nav-icon">🏪</span>Locales</a>
+  <a class="nav-item" href="#usuarios" onclick="activarNav(this)"><span class="nav-icon">🔑</span>Usuarios del sistema</a>
+  <a class="nav-item" href="#docs" onclick="activarNav(this)"><span class="nav-icon">🗄</span>Documentos generados</a>
+  <a class="nav-item" href="#backup" onclick="activarNav(this)"><span class="nav-icon">💾</span>Backup y restauración</a>
+
+  <div class="nav-section">Ayuda</div>
+  <a class="nav-item" href="#faq" onclick="activarNav(this)"><span class="nav-icon">❓</span>Preguntas frecuentes</a>
+</nav>
+
+<!-- CONTENT -->
+<div id="content">
+
+  <!-- ══ INTRO ══ -->
+  <div class="section" id="intro">
+    <div class="section-header">
+      <span class="section-icon">📖</span>
+      <div>
+        <div class="section-title">¿Qué es Dulce Control?</div>
+      </div>
+      <span class="section-badge">Introducción</span>
+    </div>
+
+    <p style="font-size:.88rem;line-height:1.7;margin-bottom:16px;">
+      <strong>Dulce Control</strong> es un sistema de gestión integral para heladería y mercado. Funciona directamente desde el navegador, sin instalación, y guarda todos los datos en el dispositivo donde se usa.
+    </p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">🖥 Dos módulos</div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-titulo">Operaciones (index.html)</div>
+              <div class="step-desc">Pantalla de trabajo diario. Ventas, stock, historial y cierre mensual. Es el acceso principal del sistema.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-titulo">Administración (heladeria_admin.html)</div>
+              <div class="step-desc">Panel del dueño. Gastos, balance, RRHH, informes con IA, configuración del sistema.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">⚡ Características clave</div>
+        <div style="font-size:.78rem;color:var(--choco-medio);line-height:1.8;">
+          <div>✓ Sin instalación — funciona en el navegador</div>
+          <div>✓ Sin internet obligatorio para operar</div>
+          <div>✓ Datos guardados en el dispositivo</div>
+          <div>✓ Hasta 3 locales de venta + depósito central</div>
+          <div>✓ Múltiples usuarios con PIN</div>
+          <div>✓ Informes generados con IA (API key propia)</div>
+          <div>✓ Exportación TXT y Word</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <div><strong>Importante:</strong> Los datos se guardan únicamente en el navegador de este dispositivo. Si borrás el historial del navegador o usás modo incógnito, los datos se pierden. Hacé backup regularmente desde Administración → Configuración → Backup.</div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-title">🗺 Flujo general del sistema</div>
+      <div class="flow">
+        <div class="flow-box active">Abrir index.html</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box active">Login con PIN</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box success">Admin: acceso completo</div>
+      </div>
+      <div class="flow" style="margin-top:6px;">
+        <div class="flow-box" style="visibility:hidden;min-width:90px;"></div>
+        <div class="flow-arrow" style="visibility:hidden;">→</div>
+        <div class="flow-box active">Login con PIN</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box warning">Empleado: solo venta diaria</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ACCESO ══ -->
+  <div class="section" id="acceso">
+    <div class="section-header">
+      <span class="section-icon">🔐</span>
+      <div><div class="section-title">Acceso y usuarios</div></div>
+      <span class="section-badge">Seguridad</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">El sistema siempre pide login al abrirse. No se puede acceder sin seleccionar un usuario y confirmar el PIN. La sesión expira automáticamente a las 8 horas.</p>
+
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot" style="background:#FF5F57;"></div>
+        <div class="mockup-dot" style="background:#FFBD2E;margin-left:4px;"></div>
+        <div class="mockup-dot" style="background:#28CA41;margin-left:4px;"></div>
+        <span class="mockup-title">Pantalla de login</span>
+      </div>
+      <div class="mock-login">
+        <div class="mock-login-box">
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--chocolate);margin-bottom:4px;">Dulce Control</div>
+          <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--choco-medio);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;">¿Quién ingresa?</div>
+          <div class="mock-user-btn" style="border-color:var(--caramelo);background:var(--dulce-claro);">
+            <div class="mock-avatar">A</div>
+            <div>
+              <div style="font-size:.78rem;font-weight:700;">Administrador</div>
+              <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--choco-medio);">ADMIN</div>
+            </div>
+          </div>
+          <div class="mock-user-btn">
+            <div class="mock-avatar" style="background:linear-gradient(135deg,var(--menta),#5cb07a);">M</div>
+            <div>
+              <div style="font-size:.78rem;font-weight:700;">María</div>
+              <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:var(--choco-medio);">EMPLEADO · Local Centro</div>
+            </div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:var(--choco-medio);margin-top:12px;margin-bottom:6px;">PIN para Administrador</div>
+          <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px;">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--caramelo);"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--caramelo);"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--borde2);border:1.5px solid var(--borde2);"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--borde2);border:1.5px solid var(--borde2);"></div>
+          </div>
+          <div class="mock-pin-pad">
+            <div class="mock-pin-btn">1</div><div class="mock-pin-btn">2</div><div class="mock-pin-btn">3</div>
+            <div class="mock-pin-btn">4</div><div class="mock-pin-btn">5</div><div class="mock-pin-btn">6</div>
+            <div class="mock-pin-btn">7</div><div class="mock-pin-btn">8</div><div class="mock-pin-btn">9</div>
+            <div class="mock-pin-btn" style="font-size:.6rem;color:var(--choco-medio);">← Volver</div>
+            <div class="mock-pin-btn">0</div>
+            <div class="mock-pin-btn">⌫</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Seleccioná tu usuario</div>
+          <div class="step-desc">Tocá tu nombre en la lista. El último usuario usado aparece preseleccionado visualmente.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Ingresá tu PIN de 4 dígitos</div>
+          <div class="step-desc">Usá el teclado numérico. Si el PIN es incorrecto, el sistema lo avisa y reinicia el ingreso. Si no tenés PIN asignado, entrás directo.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Accedés según tu rol</div>
+          <div class="step-desc"><strong>Admin</strong>: ve todos los módulos. <strong>Empleado</strong>: ve únicamente la pantalla de venta diaria de su local asignado.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div class="card-title">🎭 Comparación de roles</div>
+      <table class="roles-table">
+        <thead><tr><th>Módulo</th><th>Admin</th><th>Empleado</th></tr></thead>
+        <tbody>
+          <tr><td>Venta diaria</td><td class="check">✓ Todos los locales</td><td class="check">✓ Solo su local</td></tr>
+          <tr><td>Stock</td><td class="check">✓</td><td class="cross">✗</td></tr>
+          <tr><td>Catálogo de productos</td><td class="check">✓</td><td class="cross">✗</td></tr>
+          <tr><td>Historial de ventas</td><td class="check">✓</td><td class="cross">✗</td></tr>
+          <tr><td>Cierre mensual</td><td class="check">✓</td><td class="cross">✗</td></tr>
+          <tr><td>Administración completa</td><td class="check">✓</td><td class="cross">✗</td></tr>
+          <tr><td>Este manual</td><td class="check">✓</td><td class="check">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <div><strong>PIN inicial del administrador:</strong> <span class="hl">1234</span>. Cambialo inmediatamente desde Administración → Usuarios.</div>
+    </div>
+  </div>
+
+  <!-- ══ VENTAS ══ -->
+  <div class="section" id="ventas">
+    <div class="section-header">
+      <span class="section-icon">🛒</span>
+      <div><div class="section-title">Venta diaria</div></div>
+      <span class="section-badge">Operaciones</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">La venta diaria es la pantalla principal de trabajo. Funciona como un punto de venta (POS) simplificado. Cada venta descuenta automáticamente el stock del local activo.</p>
+
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot" style="background:#FF5F57;"></div>
+        <div class="mockup-dot" style="background:#FFBD2E;margin-left:4px;"></div>
+        <div class="mockup-dot" style="background:#28CA41;margin-left:4px;"></div>
+        <span class="mockup-title">Venta diaria — POS</span>
+      </div>
+      <div class="mockup-body">
+        <div class="mock-pos">
+          <div>
+            <div style="display:flex;gap:0;margin-bottom:10px;">
+              <div style="flex:1;padding:7px;background:var(--caramelo);color:white;border-radius:6px 0 0 6px;font-size:.7rem;font-weight:700;text-align:center;">🍦 Heladería</div>
+              <div style="flex:1;padding:7px;background:var(--crema);color:var(--choco-medio);border:1.5px solid var(--borde);border-left:none;border-radius:0 6px 6px 0;font-size:.7rem;font-weight:700;text-align:center;">🛒 Mercado</div>
+            </div>
+            <div style="font-size:.6rem;font-family:'DM Mono',monospace;color:var(--caramelo);background:var(--dulce-claro);padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:7px;border-left:2px solid var(--caramelo);">Porciones en local</div>
+            <div class="mock-prod-grid">
+              <div class="mock-prod-btn"><div class="mock-prod-name">Bocha Cono de Pasta x1</div><div class="mock-prod-price">$3.000</div></div>
+              <div class="mock-prod-btn" style="border-color:var(--caramelo);background:var(--dulce-claro);"><div class="mock-prod-name">Bochas Cucuruchón x2</div><div class="mock-prod-price">$4.500</div></div>
+              <div class="mock-prod-btn"><div class="mock-prod-name">Bochas Capelina x3</div><div class="mock-prod-price">$6.000</div></div>
+            </div>
+          </div>
+          <div class="mock-ticket">
+            <div class="mock-ticket-header"><div class="mock-ticket-title">🧾 Ticket</div></div>
+            <div class="mock-ticket-body">
+              <div class="mock-ticket-item"><span>Bochas Cucuruchón x2</span><span style="font-family:'DM Mono',monospace;">$4.500</span></div>
+              <div class="mock-ticket-item"><span>½ Kilo</span><span style="font-family:'DM Mono',monospace;">$17.000</span></div>
+              <div class="mock-ticket-total"><span>TOTAL</span><span>$21.500</span></div>
+              <div style="display:flex;gap:4px;margin-top:7px;">
+                <div style="flex:1;padding:5px;border:1.5px solid var(--caramelo);border-radius:4px;background:var(--dulce-claro);font-family:'DM Mono',monospace;font-size:.55rem;font-weight:700;color:var(--caramelo);text-align:center;">💵 Efectivo</div>
+                <div style="flex:1;padding:5px;border:1.5px solid var(--borde);border-radius:4px;font-family:'DM Mono',monospace;font-size:.55rem;font-weight:700;color:var(--choco-medio);text-align:center;">💳 Tarjeta</div>
+                <div style="flex:1;padding:5px;border:1.5px solid var(--borde);border-radius:4px;font-family:'DM Mono',monospace;font-size:.55rem;font-weight:700;color:var(--choco-medio);text-align:center;">📱 QR</div>
+              </div>
+              <div class="mock-btn-reg">✓ Registrar venta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Seleccioná el local activo</div>
+          <div class="step-desc">Arriba a la derecha del topbar aparece el selector de local. Los empleados lo tienen fijo en su local asignado y no pueden cambiarlo.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Elegí la categoría: Heladería o Mercado</div>
+          <div class="step-desc">Tab <strong>Heladería</strong>: productos agrupados por categoría (Porciones, Por peso, Postres, Individuales de marca). Tab <strong>Mercado</strong>: búsqueda por nombre de producto.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Tocá el producto para agregarlo al ticket</div>
+          <div class="step-desc">Cada toque suma una unidad. Para los <strong>baldes 3LT y 5LT</strong>, el campo de cantidad acepta decimales (ej: 2.5 kg). Usá los botones <span class="hl">−</span> y <span class="hl">+</span> del ticket para ajustar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-titulo">Seleccioná el método de pago</div>
+          <div class="step-desc">Efectivo, Tarjeta o QR. El método queda registrado en el historial y en el balance mensual.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-titulo">Tocá "Registrar venta"</div>
+          <div class="step-desc">El sistema guarda la venta, descuenta el stock del local activo y limpia el ticket para la siguiente venta.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-ok">
+      <span class="alert-icon">✓</span>
+      <div>Un ticket puede tener productos de Heladería y Mercado mezclados. El total se cobra junto pero el historial los separa por sección para los reportes.</div>
+    </div>
+  </div>
+
+  <!-- ══ STOCK ══ -->
+  <div class="section" id="stock">
+    <div class="section-header">
+      <span class="section-icon">📦</span>
+      <div><div class="section-title">Stock e inventario</div></div>
+      <span class="section-badge">Operaciones</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">El stock se gestiona por ubicación: el depósito central y hasta 3 locales de venta. Cada venta descuenta automáticamente del stock del local. Los movimientos manuales permiten reponer desde el depósito.</p>
+
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot" style="background:#FF5F57;"></div>
+        <div class="mockup-dot" style="background:#FFBD2E;margin-left:4px;"></div>
+        <div class="mockup-dot" style="background:#28CA41;margin-left:4px;"></div>
+        <span class="mockup-title">Stock — vista por ubicación</span>
+      </div>
+      <div class="mockup-body">
+        <div style="display:flex;gap:2px;margin-bottom:12px;">
+          <div style="padding:6px 14px;background:var(--caramelo);color:white;border-radius:6px 0 0 6px;font-size:.7rem;font-weight:700;">Depósito Central</div>
+          <div style="padding:6px 14px;background:var(--crema);border:1.5px solid var(--borde);border-left:none;font-size:.7rem;font-weight:700;color:var(--choco-medio);">Local Centro</div>
+          <div style="padding:6px 14px;background:var(--crema);border:1.5px solid var(--borde);border-left:none;border-radius:0 6px 6px 0;font-size:.7rem;font-weight:700;color:var(--choco-medio);">Local Norte</div>
+        </div>
+        <div class="mock-stock-row"><span class="mock-stock-name">Almendrado x8</span><span style="font-family:'DM Mono',monospace;font-size:.65rem;">12 u</span><span class="mock-badge mock-badge-ok">OK</span></div>
+        <div class="mock-stock-row"><span class="mock-stock-name">Balde 3 LT</span><span style="font-family:'DM Mono',monospace;font-size:.65rem;">2.3 kg</span><span class="mock-badge mock-badge-warn">BAJO</span></div>
+        <div class="mock-stock-row"><span class="mock-stock-name">Tortas</span><span style="font-family:'DM Mono',monospace;font-size:.65rem;">0 u</span><span class="mock-badge mock-badge-danger">CRÍTICO</span></div>
+        <div class="mock-stock-row"><span class="mock-stock-name">Cucuruchos (insumo)</span><span style="font-family:'DM Mono',monospace;font-size:.65rem;">48 u</span><span class="mock-badge mock-badge-ok">OK</span></div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Navegá entre ubicaciones con las tabs</div>
+          <div class="step-desc">Depósito Central, Local 1, Local 2, Local 3. Cada tab muestra el stock de esa ubicación específica.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Estados de stock</div>
+          <div class="step-desc"><span class="mock-badge mock-badge-ok">OK</span> = sobre el mínimo configurado. <span class="mock-badge mock-badge-warn">BAJO</span> = igual o por debajo del mínimo. <span class="mock-badge mock-badge-danger">CRÍTICO</span> = en cero. Los críticos aparecen en el Dashboard como alertas.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Registrar un movimiento</div>
+          <div class="step-desc">Botón <span class="hl">+ Movimiento</span>. Elegís el tipo: <strong>Entrada</strong> (llegada de mercadería), <strong>Salida</strong> (baja manual) o <strong>Transferencia</strong> (de depósito a local o entre locales). Todo queda en el historial de movimientos.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-titulo">Ajuste rápido</div>
+          <div class="step-desc">Botón <span class="hl">± Ajustar</span> en cada fila. Útil para corregir diferencias después de un conteo físico. Registra el motivo del ajuste.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <div>Los <strong>insumos</strong> (cucuruchos, servilletas, recipientes de telgopor, etc.) se crean en Administración → Insumos. Aparecen en el stock junto con los productos de venta.</div>
+    </div>
+  </div>
+
+  <!-- ══ PRODUCTOS ══ -->
+  <div class="section" id="productos">
+    <div class="section-header">
+      <span class="section-icon">🍦</span>
+      <div><div class="section-title">Catálogo de productos</div></div>
+      <span class="section-badge">Operaciones</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">El catálogo tiene dos secciones separadas: <strong>Heladería</strong> (con categorías fijas) y <strong>Mercado</strong> (categorías libres). Desde acá se gestionan precios, costos y márgenes.</p>
+
+    <div class="card">
+      <div class="card-title">🏷 Categorías de Heladería</div>
+      <div class="grid-2" style="font-size:.78rem;color:var(--choco-medio);line-height:1.8;">
+        <div>
+          <div>📍 <strong>Porciones en local</strong> — bochas, cucuruchón, capelina, cono de pasta, trihelado</div>
+          <div>⚖ <strong>Por peso / volumen</strong> — ¼kg, ½kg, ¾kg, 1kg, Balde 3LT, Balde 5LT</div>
+        </div>
+        <div>
+          <div>🎂 <strong>Postres / Especiales</strong> — almendrado, bombón, postres, alfajor, tortas</div>
+          <div>🍫 <strong>Individuales de marca</strong> — Surfy, Fruhu, Dooply, Cremissimo y 12 más</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Calcular el precio de venta correcto</div>
+          <div class="step-desc">En el formulario de producto, ingresá el <strong>costo directo</strong> y el <strong>margen objetivo %</strong>. El sistema calcula automáticamente el precio sugerido: <span class="hl">precio = costo ÷ (1 − margen%)</span>. Podés aceptar ese precio o ingresar uno diferente.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Vincular insumos al producto</div>
+          <div class="step-desc">Para productos de heladería podés vincular insumos consumibles (ej: 1 cucurucho por porción). Esto permite el cálculo real de costo total por unidad vendida.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Productos de Mercado</div>
+          <div class="step-desc">Tab Mercado: alta libre con categoría personalizada (Almacén, Limpieza, etc.). Aparecen en la tab Mercado del POS de ventas, separados de los helados.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-titulo">Importar desde PDF o Word</div>
+          <div class="step-desc">Botón <span class="hl">Importar PDF/Word</span>: adjuntá una planilla de precios del proveedor. El sistema extrae el texto para que lo uses como referencia al cargar productos. La carga es manual para evitar errores de parseo.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <div>Desactivar un producto lo saca del POS de ventas pero conserva todo el historial. Nunca elimines un producto que ya tuvo ventas registradas.</div>
+    </div>
+  </div>
+
+  <!-- ══ HISTORIAL ══ -->
+  <div class="section" id="historial">
+    <div class="section-header">
+      <span class="section-icon">📋</span>
+      <div><div class="section-title">Historial de ventas</div></div>
+      <span class="section-badge">Operaciones</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">Registro completo de todas las ventas. Filtrá por local, rango de fechas y método de pago. Exportable en TXT y Word.</p>
+
+    <div class="card">
+      <div class="card-title">🔍 Filtros disponibles</div>
+      <div class="grid-2" style="font-size:.78rem;color:var(--choco-medio);line-height:1.8;">
+        <div>
+          <div>📍 Por local (o todos consolidado)</div>
+          <div>📅 Por rango de fechas (desde / hasta)</div>
+        </div>
+        <div>
+          <div>💳 Por método de pago (Efectivo / Tarjeta / QR)</div>
+          <div>📊 KPIs: total período, transacciones, ticket promedio</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Ver el detalle de una venta</div>
+          <div class="step-desc">Botón <span class="hl">Ver detalle</span> en cada fila: despliega los ítems vendidos, cantidades y subtotales de esa transacción.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Exportar el historial</div>
+          <div class="step-desc">Botones <span class="hl">↓ TXT</span> y <span class="hl">↓ Word</span> exportan todas las ventas del filtro activo en ese momento.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CIERRE MENSUAL ══ -->
+  <div class="section" id="cierre">
+    <div class="section-header">
+      <span class="section-icon">📅</span>
+      <div><div class="section-title">Cierre mensual</div></div>
+      <span class="section-badge">Operaciones</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">El cierre mensual compara el stock teórico (calculado por el sistema) contra el stock físico que contás vos. Detecta mermas, sobrantes y errores de registro.</p>
+
+    <div class="card">
+      <div class="card-title">📐 Fórmula del stock teórico</div>
+      <div style="background:var(--crema);border:1px solid var(--borde2);border-radius:var(--radio);padding:12px;font-family:'DM Mono',monospace;font-size:.75rem;text-align:center;color:var(--chocolate);">
+        Stock inicial + Entradas del mes − Ventas/Salidas del mes = Stock teórico final
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Seleccioná el período y el local</div>
+          <div class="step-desc">El sistema muestra automáticamente los movimientos del mes seleccionado por ubicación.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Ingresá el stock físico contado</div>
+          <div class="step-desc">En la columna <strong>Stock físico contado</strong>, escribí la cantidad real que tenés en el local. Para los baldes usá decimales (ej: 1.75 kg). Para el resto, números enteros.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Interpretá la diferencia</div>
+          <div class="step-desc"><span style="color:var(--frutilla);font-weight:700;">Rojo</span> = físico menor al teórico → hay merma, pérdida o error de registro. <span style="color:var(--menta);font-weight:700;">Verde</span> = físico mayor → hay sobrante (poco común, revisar entradas). <span style="color:var(--choco-medio);font-weight:700;">Cero</span> = cuadra perfectamente.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-titulo">Guardá el cierre</div>
+          <div class="step-desc">Botón <span class="hl">Guardar cierre</span>. El stock físico contado se usa como <strong>stock inicial</strong> del mes siguiente, manteniendo continuidad en los cálculos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ INSUMOS ══ -->
+  <div class="section" id="insumos">
+    <div class="section-header">
+      <span class="section-icon">🧴</span>
+      <div><div class="section-title">Insumos</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">Los insumos son materiales consumibles que no se venden directamente pero forman parte del costo de operación: cucuruchos, servilletas, recipientes de telgopor, bolsas, etc.</p>
+
+    <div class="card">
+      <div class="card-title">📂 Categorías de insumos</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="background:var(--dulce-claro);border:1px solid var(--borde2);border-radius:20px;padding:3px 12px;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--caramelo);">Descartables</span>
+        <span style="background:var(--dulce-claro);border:1px solid var(--borde2);border-radius:20px;padding:3px 12px;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--caramelo);">Materias primas</span>
+        <span style="background:var(--dulce-claro);border:1px solid var(--borde2);border-radius:20px;padding:3px 12px;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--caramelo);">Limpieza</span>
+        <span style="background:var(--dulce-claro);border:1px solid var(--borde2);border-radius:20px;padding:3px 12px;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--caramelo);">Embalaje</span>
+        <span style="background:var(--dulce-claro);border:1px solid var(--borde2);border-radius:20px;padding:3px 12px;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--caramelo);">Otros</span>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Crear un insumo</div>
+          <div class="step-desc">Botón <span class="hl">+ Nuevo insumo</span>. Campos: nombre, categoría, unidad (u / kg / lt / pack), costo unitario, stock mínimo de alerta.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Vincular al producto de venta</div>
+          <div class="step-desc">Al editar un producto de heladería, podés vincular insumos con la cantidad consumida por unidad vendida (ej: 1 cucurucho por cada Bocha Cono de Pasta).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Seguimiento de stock</div>
+          <div class="step-desc">Los insumos aparecen en la pantalla de Stock junto con los productos. Las alertas del Dashboard también los incluyen cuando están bajo el mínimo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GASTOS ══ -->
+  <div class="section" id="gastos">
+    <div class="section-header">
+      <span class="section-icon">💸</span>
+      <div><div class="section-title">Gastos</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">El registro de gastos alimenta directamente el balance mensual. Se distinguen dos tipos que afectan de manera distinta el resultado del negocio.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📍 Gastos directos</div>
+        <div style="font-size:.78rem;color:var(--choco-medio);line-height:1.7;">
+          Vinculados directamente a la producción o venta:<br>
+          Materia prima, embalaje, descartables, personal directo, servicios directos.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏢 Gastos indirectos</div>
+        <div style="font-size:.78rem;color:var(--choco-medio);line-height:1.7;">
+          Gastos de estructura del negocio:<br>
+          Alquiler, luz, gas, agua, internet, publicidad, contador, seguro, mantenimiento.
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Registrar un gasto</div>
+          <div class="step-desc">Botón <span class="hl">+ Registrar gasto</span>. Completá: fecha, tipo (directo/indirecto), categoría, descripción, monto y número de comprobante (opcional).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Adjuntar comprobante</div>
+          <div class="step-desc">Podés arrastrar o adjuntar un PDF o Word (factura, ticket, remito). El sistema extrae el texto e intenta sugerir el monto automáticamente. Siempre verificá el número extraído.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Asignar a local o área general</div>
+          <div class="step-desc">Los gastos pueden asignarse a un local específico o a "General" (aplica a toda la operación). Esto permite análisis de rentabilidad por local en versiones futuras.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BALANCE ══ -->
+  <div class="section" id="balance">
+    <div class="section-header">
+      <span class="section-icon">📊</span>
+      <div><div class="section-title">Balance e informes con IA</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">El balance mensual consolida ventas, costos y gastos para mostrar el resultado real del período. Incluye análisis Pareto de productos más vendidos e informes narrativos generados por IA.</p>
+
+    <div class="card">
+      <div class="card-title">📐 Fórmula del resultado neto</div>
+      <div style="background:var(--crema);border:1px solid var(--borde2);border-radius:var(--radio);padding:12px;font-family:'DM Mono',monospace;font-size:.72rem;line-height:1.8;color:var(--chocolate);">
+        Total ventas<br>
+        − Costo de mercadería vendida (qty vendida × costo unitario de cada producto)<br>
+        = <strong>Resultado bruto</strong><br>
+        − Gastos directos del mes<br>
+        − Gastos indirectos del mes<br>
+        − Costo laboral total (sueldos pagados)<br>
+        = <strong style="color:var(--menta);">RESULTADO NETO</strong>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="card-title">📊 Análisis Pareto — Productos más vendidos</div>
+      <div style="margin-bottom:10px;">
+        <div class="mock-pareto-row">
+          <span class="mock-pareto-name">Bochas Cucuruchón x2</span>
+          <div class="mock-pareto-bg"><div class="mock-pareto-fill" style="width:100%;background:var(--caramelo);"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--choco-medio);">32.1%</span>
+          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--menta);">32%▲</span>
+        </div>
+        <div class="mock-pareto-row">
+          <span class="mock-pareto-name">½ Kilo</span>
+          <div class="mock-pareto-bg"><div class="mock-pareto-fill" style="width:72%;background:var(--caramelo);"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--choco-medio);">23.1%</span>
+          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--menta);">55%▲</span>
+        </div>
+        <div class="mock-pareto-row">
+          <span class="mock-pareto-name">Almendrado Porción</span>
+          <div class="mock-pareto-bg"><div class="mock-pareto-fill" style="width:52%;background:var(--caramelo);"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--choco-medio);">16.7%</span>
+          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--menta);">72%▲</span>
+        </div>
+        <div class="mock-pareto-row">
+          <span class="mock-pareto-name">Surfy</span>
+          <div class="mock-pareto-bg"><div class="mock-pareto-fill" style="width:28%;background:var(--borde2);"></div></div>
+          <span style="font-family:'DM Mono',monospace;font-size:.62rem;color:var(--choco-medio);">9.0%</span>
+          <span style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--menta);">81%▲</span>
+        </div>
+        <div style="font-size:.64rem;color:var(--choco-medio);margin-top:6px;">🟠 Caramelo = productos que forman el 80% del volumen (Pareto 80/20)</div>
+      </div>
+      <div style="font-size:.76rem;color:var(--choco-medio);">Toggle <span class="hl">Por unidades</span> / <span class="hl">Por ingresos</span> para cambiar el criterio del análisis.</div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Generar el informe con IA</div>
+          <div class="step-desc">Botón <span class="hl">🤖 Informe IA</span>. Podés agregar contexto adicional (eventos especiales del mes, cambios de precios) o adjuntar un documento PDF/Word. La IA genera un análisis narrativo con recomendaciones concretas.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Generar el plan Gantt</div>
+          <div class="step-desc">Después de generar el informe, aparece el botón <span class="hl">🤖 Generar Gantt</span>. La IA crea un plan de acción con tareas, duraciones en semanas y prioridades (urgente / importante / planificable) visualizadas en un diagrama.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Guardar, descargar y limpiar</div>
+          <div class="step-desc">Cada documento generado se guarda automáticamente en <strong>Documentos</strong> (historial permanente). Botón <span class="hl">↓ TXT</span> / <span class="hl">↓ Word</span> para descargar. Botón <span class="hl">🗑 Limpiar</span> limpia el área de trabajo sin borrar el historial.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info">
+      <span class="alert-icon">ℹ</span>
+      <div><strong>API Key requerida para IA.</strong> Sin API Key, el balance y el Pareto funcionan igual, pero los botones de informe IA, Gantt y F.931 no están disponibles. Configurá la clave desde Configuración → API Key.</div>
+    </div>
+  </div>
+
+  <!-- ══ RRHH ══ -->
+  <div class="section" id="rrhh">
+    <div class="section-header">
+      <span class="section-icon">👥</span>
+      <div><div class="section-title">Empleados (RRHH)</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">Ficha completa de cada trabajador. Datos personales y laborales requeridos para la liquidación de sueldos y el cumplimiento con ARCA.</p>
+
+    <div class="card">
+      <div class="card-title">📋 Datos de la ficha del empleado</div>
+      <div class="grid-2" style="font-size:.78rem;color:var(--choco-medio);line-height:1.8;">
+        <div>
+          <div><strong>Personales:</strong> apellido, nombre, DNI, CUIL, fecha de nacimiento, teléfono, contacto de emergencia.</div>
+        </div>
+        <div>
+          <div><strong>Laborales:</strong> cargo, local asignado, fecha de alta, sueldo bruto, obra social, CBU para pago, observaciones.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Dar de alta un empleado</div>
+          <div class="step-desc">Botón <span class="hl">+ Nuevo empleado</span>. El CUIL es obligatorio — lo usa el sistema para el documento F.931.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Dar de baja un empleado</div>
+          <div class="step-desc">Botón <span class="hl">Baja</span> en la ficha. El empleado queda inactivo pero sus datos y liquidaciones históricas se conservan. Podés reactivarlo si es necesario.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Exportar ficha individual</div>
+          <div class="step-desc">Botón <span class="hl">↓ Ficha</span>: descarga la ficha completa del empleado en TXT o Word. Útil para documentación interna o archivo físico.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LIQUIDACIÓN ══ -->
+  <div class="section" id="liquidacion">
+    <div class="section-header">
+      <span class="section-icon">💼</span>
+      <div><div class="section-title">Liquidación de sueldos</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">Cálculo automático de sueldos con generación de recibo según el <strong>Decreto 407/2026</strong> y documento de trabajo F.931 para ARCA.</p>
+
+    <div class="card">
+      <div class="card-title">🧮 Cálculo automático de aportes y contribuciones</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.72rem;line-height:1.9;color:var(--chocolate);">
+        Sueldo básico + Horas extra + SAC proporcional = <strong>Bruto total</strong><br>
+        − Jubilación 11% − Obra Social 3% − PAMI/INSSJP 3% = <span style="color:var(--menta);font-weight:700;">Sueldo neto</span><br>
+        Bruto total + Contribuciones patronales (~23%) = <span style="color:var(--frutilla);font-weight:700;">Costo total empleador</span>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Seleccionar empleado y período</div>
+          <div class="step-desc">El sueldo bruto del empleado se carga automáticamente desde su ficha. Podés modificarlo si el período tiene un monto diferente.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Completar horas extra y SAC</div>
+          <div class="step-desc">Horas extra: cantidad de horas × valor hora. SAC proporcional: 1/12 del sueldo bruto si corresponde incluirlo en la liquidación.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Recibo Decreto 407/2026</div>
+          <div class="step-desc">Se genera automáticamente con las 4 secciones obligatorias: identificación, costo laboral total (con gráfico de torta), deducciones al trabajador y sueldo neto a percibir.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-titulo">Generar documento F.931</div>
+          <div class="step-desc">Botón <span class="hl">🤖 F.931</span> (requiere API Key). Genera un documento de trabajo estructurado con los datos exactos para cargar en ARCA → Declaración en Línea con Clave Fiscal nivel 2.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-titulo">Guardar y marcar como pagado</div>
+          <div class="step-desc">Botón <span class="hl">Guardar liquidación</span> → queda en el historial como "Borrador". Una vez pagado el sueldo, botón <span class="hl">✓ Pagar</span> para marcarlo como pagado. Solo las liquidaciones pagadas se computan en el costo laboral del balance.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">⚠</span>
+      <div><strong>El documento F.931 es un documento de trabajo, NO la DDJJ oficial.</strong> Debe cargarse manualmente en <strong>arca.gob.ar → Declaración en Línea</strong>. Este sistema no presenta declaraciones ante ARCA de forma automática.</div>
+    </div>
+  </div>
+
+  <!-- ══ LOCALES ══ -->
+  <div class="section" id="locales">
+    <div class="section-header">
+      <span class="section-icon">🏪</span>
+      <div><div class="section-title">Gestión de locales</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">El sistema soporta un <strong>depósito central</strong> y hasta <strong>3 locales de venta</strong>. Desde Configuración podés editar, agregar y desactivar locales.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Editar un local existente</div>
+          <div class="step-desc">Botón <span class="hl">Editar</span> junto a cada local. Podés cambiar el nombre, la descripción/dirección y el tipo (depósito o local de venta). El depósito central no puede convertirse en local de venta.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Agregar un nuevo local</div>
+          <div class="step-desc">Botón <span class="hl">+ Agregar local</span>. Máximo 3 locales de venta activos. El sistema inicializa automáticamente el stock vacío para la nueva ubicación.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Desactivar un local</div>
+          <div class="step-desc">Botón <span class="hl">Desactivar</span>. El local desaparece de la operación activa (POS, stock, selectores) pero todo el historial de ventas y stock se conserva. Podés reactivarlo en cualquier momento.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <div>Si desactivás un local que tiene empleados asignados, esos empleados quedan sin local válido. Reasignalos antes de desactivar.</div>
+    </div>
+  </div>
+
+  <!-- ══ USUARIOS ══ -->
+  <div class="section" id="usuarios">
+    <div class="section-header">
+      <span class="section-icon">🔑</span>
+      <div><div class="section-title">Usuarios del sistema</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">Gestioná quién puede acceder al sistema y con qué permisos. Solo el administrador puede crear, editar y desactivar usuarios.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Crear un usuario nuevo</div>
+          <div class="step-desc">Botón <span class="hl">+ Nuevo usuario</span>. Completá: nombre (el que aparece en el login), rol (Admin o Empleado), local asignado (solo para empleados) y PIN de 4 dígitos.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Cambiar el PIN</div>
+          <div class="step-desc">Editá el usuario y escribí el nuevo PIN. Si dejás el campo vacío, el PIN anterior no cambia.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Desactivar un usuario</div>
+          <div class="step-desc">Botón <span class="hl">Desactivar</span>. El usuario no puede iniciar sesión pero sus registros históricos quedan intactos. El usuario <strong>admin</strong> no puede desactivarse.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <div>Cambiá el PIN del administrador inmediatamente después de la primera configuración del sistema. El PIN inicial es <span class="hl">1234</span>.</div>
+    </div>
+  </div>
+
+  <!-- ══ DOCS ══ -->
+  <div class="section" id="docs">
+    <div class="section-header">
+      <span class="section-icon">🗄</span>
+      <div><div class="section-title">Documentos generados</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;">Todos los documentos generados por IA se guardan automáticamente con su título, tipo y fecha de generación. Máximo 50 documentos almacenados.</p>
+
+    <div class="card">
+      <div class="card-title">📄 Tipos de documentos guardados</div>
+      <div style="font-size:.78rem;color:var(--choco-medio);line-height:1.8;">
+        <div>📊 <strong>Informe balance</strong> — análisis mensual narrativo del negocio</div>
+        <div>📅 <strong>Plan Gantt</strong> — cronograma de acciones de mejora</div>
+        <div>📄 <strong>F.931</strong> — documento de trabajo para ARCA por empleado y período</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Acceder al historial</div>
+          <div class="step-desc">Administración → Documentos. Filtrá por tipo para ver solo F.931, solo balances o solo Gantt.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Descargar un documento</div>
+          <div class="step-desc">Botones <span class="hl">↓ TXT</span> y <span class="hl">↓ Word</span> en cada documento del historial. El nombre del archivo incluye el título y período para identificación rápida.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-titulo">Limpiar documentos antiguos</div>
+          <div class="step-desc">Botón <span class="hl">Purgar anteriores a 6 meses</span> elimina los documentos más viejos. También podés eliminar individualmente cada uno. El historial del sistema (ventas, gastos, etc.) no se ve afectado.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ BACKUP ══ -->
+  <div class="section" id="backup">
+    <div class="section-header">
+      <span class="section-icon">💾</span>
+      <div><div class="section-title">Backup y restauración</div></div>
+      <span class="section-badge">Administración</span>
+    </div>
+
+    <p style="font-size:.84rem;line-height:1.6;margin-bottom:16px;"><strong>Los datos solo existen en este dispositivo.</strong> Si el navegador se limpia, el dispositivo se rompe o se reinstala el sistema operativo, los datos se pierden sin backup. El backup es una responsabilidad del administrador.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-titulo">Descargar backup</div>
+          <div class="step-desc">Administración → Configuración → <span class="hl">⬇ Descargar backup JSON</span>. Genera un archivo <code>.json</code> con todos los datos del sistema. Guardalo en un lugar seguro (nube, pendrive, otro dispositivo).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-titulo">Restaurar desde backup</div>
+          <div class="step-desc">Botón <span class="hl">⬆ Restaurar desde backup</span> o arrastrá el archivo .json a la zona de drag & drop. El sistema pide confirmación y reemplaza todos los datos actuales con los del backup.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-danger">
+      <span class="alert-icon">🚨</span>
+      <div><strong>Hacé backup al menos una vez por semana.</strong> Si migrás a un nuevo dispositivo o navegador, hacé backup en el viejo y restaurá en el nuevo antes de empezar a operar. Los datos no se sincronizan automáticamente entre dispositivos.</div>
+    </div>
+
+    <div class="alert alert-warn">
+      <span class="alert-icon">⚠</span>
+      <div><strong>Reset total:</strong> La opción "Eliminar todos los datos" en la Zona de peligro borra absolutamente todo y no tiene marcha atrás. Solo usala si necesitás empezar el sistema desde cero.</div>
+    </div>
+  </div>
+
+  <!-- ══ FAQ ══ -->
+  <div class="section" id="faq">
+    <div class="section-header">
+      <span class="section-icon">❓</span>
+      <div><div class="section-title">Preguntas frecuentes</div></div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿Por qué no veo el Gantt ni el informe IA? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Necesitás tener una API Key configurada. Andá a Administración → Configuración → API Key. Podés usar Gemini (Google, recomendado), OpenAI o Claude (Anthropic). La clave se guarda solo en este dispositivo.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿Puedo usar el sistema en varios dispositivos al mismo tiempo? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">No de forma automática. Los datos se guardan localmente en cada dispositivo. Si necesitás sincronización entre dispositivos, hacé backup en uno y restaurá en el otro. Si esto es un problema frecuente en tu operación, considerá contactar a BRB Estrategia para evaluar una versión con base de datos en la nube.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si cierro el navegador a mitad de una venta? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">El ticket de la venta NO se guarda automáticamente. Solo queda registrada una venta cuando tocás "Registrar venta". Si cerrás el navegador antes, el ticket se pierde pero los datos históricos no se afectan. Registrá siempre la venta antes de cerrar.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿El empleado puede ver el balance o los gastos? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">No. El rol Empleado solo tiene acceso a la pantalla de Venta diaria de su local asignado. No puede ver stock, historial, catálogo, ni acceder al panel de Administración. Este manual es el único módulo visible para ambos roles.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿El documento F.931 se presenta automáticamente a ARCA? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">No. El sistema genera un documento de trabajo con los datos correctamente calculados, pero la presentación oficial debe hacerse manualmente en arca.gob.ar → Declaración en Línea con Clave Fiscal nivel 2. El documento del sistema es una guía de carga, no una presentación oficial.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿Puedo agregar más de 3 locales? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">No en esta versión. El sistema está diseñado para un depósito central y máximo 3 locales de venta activos. Si tu operación crece, contactá a BRB Estrategia para una versión personalizada.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿Por qué los datos desaparecieron después de limpiar el historial del navegador? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">El sistema usa localStorage del navegador. Al limpiar el historial o los datos del sitio, el localStorage se borra. Por eso es crítico hacer backup regularmente. Si esto ocurrió sin backup previo, los datos no son recuperables.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿Cómo cambio el precio de un producto? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Operaciones → Catálogo de productos → botón Editar en el producto → modificar el campo "Precio de venta". Los cambios aplican a partir de la próxima venta. Las ventas históricas conservan el precio original al momento de la venta.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">¿Qué es el análisis Pareto del balance? <span class="faq-arrow">▼</span></div>
+      <div class="faq-a">El principio de Pareto (80/20) identifica qué productos generan el 80% de las ventas o ingresos. Los productos marcados en caramelo son los que componen ese 80%. Esto te dice cuáles productos son críticos para el negocio y cuáles tienen poco impacto.</div>
+    </div>
+  </div>
+
+</div><!-- /content -->
+</div><!-- /layout -->
+
+<footer class="brb-footer">
+  <strong>BRB Estrategia &amp; Procesos · Soberanía Técnica Ediciones</strong><br>
+  Boris Rodríguez Barrera · ORCID: 0009-0004-6583-6439 · Puerto Madryn, Chubut, Argentina<br>
+  bbbarrera1986@gmail.com · +54 297 517-6351<br>
+  <span>DULCE CONTROL v2.1 · Manual de usuario · 2026</span>
+</footer>
+
+<script>
+// ── LEER NOMBRE DEL NEGOCIO DESDE LOCALSTORAGE ──
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const cfg = JSON.parse(localStorage.getItem('dc_config') || 'null');
+    if (cfg && cfg.negocio_nombre) {
+      document.getElementById('header-negocio').textContent = cfg.negocio_nombre;
+      document.title = 'Manual — ' + cfg.negocio_nombre + ' · Dulce Control v2.1';
+    }
+  } catch(e) {}
+});
+
+// ── BÚSQUEDA EN EL MANUAL ──
+function buscarEnManual(q) {
+  // Limpiar marcas anteriores
+  document.querySelectorAll('.section mark').forEach(m => {
+    m.outerHTML = m.textContent;
+  });
+
+  if (!q || q.length < 2) return;
+
+  const sections = document.querySelectorAll('.section');
+  const regex = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  let primerMatch = null;
+
+  sections.forEach(sec => {
+    // Buscar en nodos de texto dentro de p, .step-desc, .step-titulo, .faq-a, .card
+    const walker = document.createTreeWalker(sec, NodeFilter.SHOW_TEXT, {
+      acceptNode: n => {
+        const parent = n.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+        const tag = parent.tagName.toLowerCase();
+        if (['script','style','input','textarea'].includes(tag)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => {
+      if (regex.test(node.textContent)) {
+        const span = document.createElement('span');
+        span.innerHTML = node.textContent.replace(regex, m => '<mark>' + m + '</mark>');
+        node.parentNode.replaceChild(span, node);
+        if (!primerMatch) primerMatch = span;
+      }
+      regex.lastIndex = 0;
+    });
+  });
+
+  if (primerMatch) {
+    primerMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+// ── NAV ACTIVO ──
+function activarNav(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Actualizar nav activo al hacer scroll
+const secciones = document.querySelectorAll('.section');
+const navItems = document.querySelectorAll('.nav-item[href]');
+
+window.addEventListener('scroll', () => {
+  let actual = '';
+  secciones.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 100) actual = sec.id;
+  });
+  navItems.forEach(item => {
+    item.classList.toggle('active', item.getAttribute('href') === '#' + actual);
+  });
+}, { passive: true });
+
+// ── FAQ TOGGLE ──
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
